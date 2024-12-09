@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+
+  cloudflare-ddns:
+
+    image: oznu/cloudflare-ddns:latest
+
+    restart: always
+
+    environment:
+
+      - API_KEY=YoUr-ClOuDfLaRe-ApI-kEy-GoEs-HeRe
+
+      - ZONE=yourdomain.com
+
+      - SUBDOMAIN=yoursubdomain
+
+      - PROXIED=true
