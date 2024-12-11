@@ -1,0 +1,11 @@
+services:
+  pingvin-share:
+    image: stonith404/pingvin-share
+    restart: unless-stopped
+    ports:
+      - 3300:3000
+    environment:
+      - TRUST_PROXY=false # Set to true if a reverse proxy is in front of the container
+    volumes:
+      - "./path/pingvin-share/data:/opt/app/backend/data"
+      - "./path/pingvin-share/data/images:/opt/app/frontend/public/img"

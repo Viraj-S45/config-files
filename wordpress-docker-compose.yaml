@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  database:
+    image: mariadb:10.6.4-focal
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: '${PASSWORD}'
+      MYSQL_DATABASE: '${DB}'
+      MYSQL_USER: '${USERNAME}'
+      MYSQL_PASSWORD: '${PASSWORD}'
+    volumes:
+      - ./path/wordpress/db-data:/var/lib/mysql
+    networks:
+      - wordpress-network
+    deploy:
+      resources:
+        limits:
+          memory: 2048m
+
+  phpmyadmin:
+    depends_on:
+      - database
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    ports:
+      - 8383:80
+    environment:
+      PMA_HOST: database
+      MYSQL_ROOT_PASSWORD: '${PASSWORD}'
+    networks:
+      - wordpress-network
+
+  wordpress:
+    depends_on:
+      - database
+    image: wordpress:6.2.2-apache
+    restart: unless-stopped
+    ports:
+      - 8880:80
+    environment:
+      WORDPRESS_DB_HOST: database:3306 # use the same name as database service
+      WORDPRESS_DB_NAME: '${DB}'
+      WORDPRESS_DB_USER: '${USERNAME}'
+      WORDPRESS_DB_PASSWORD: '${PASSWORD}'
+    volumes:
+      - ./path/wordpress/wp-contentt:/var/www/html/wp-content
+    networks:
+      - wordpress-network
+
+volumes:
+  db-data:
+
+networks:
+  wordpress-network:
+    driver: bridge  

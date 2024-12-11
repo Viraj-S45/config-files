@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - PUID=${PUID} # User ID
+      - PGID=${PGID} # Group ID
+    volumes:
+      - ./path:/srv
+      - ./path/file-browser/filebrowser.db:/database/filebrowser.db
+      - ./path/file-browser/settings.json:/config/settings.json

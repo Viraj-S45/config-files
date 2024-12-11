@@ -1,0 +1,6 @@
+services:
+  haptic-web:
+    image: chroxify/haptic-web:latest
+    ports:
+      - "3030:80"
+    restart: always

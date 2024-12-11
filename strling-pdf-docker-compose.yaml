@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:latest
+    restart: always
+    ports:
+      - '8282:8080'
+    volumes:
+      - ./path/strling-pdf/trainingData:/usr/share/tessdata # Required for extra OCR languages
+      - ./path/strling-pdf/extraConfigs:/configs
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
+      - LANGS=en_GB
+      - DOCKER_ENABLE_SECURITY=true
+      - SECURITY_ENABLELOGIN=true 
+      - SECURITY_INITIALLOGIN_USERNAME=${USERNAME}
+      - SECURITY_INITIALLOGIN_PASSWORD=${PASSWORD}
