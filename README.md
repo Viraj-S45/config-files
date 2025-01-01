@@ -5,22 +5,22 @@ This repository contains the Docker Compose files and configuration files for th
 ## Services Included
 The following services are included in this repository:
 
-1. **changedetection** - A service for monitoring website changes.
-2. **coder** - A cloud IDE for code editing and development.
-3. **file-browser** - A web-based file management tool.
-4. **homarr** - A customizable dashboard for all your apps and services.
-5. **homepage** - A simple, customizable homepage for managing links and apps.
-6. **mealie** - A self-hosted recipe manager and meal planner.
-7. **navidrome** - A lightweight, self-hosted music server.
-8. **nextcloud** - A self-hosted productivity platform.
-9. **nexterm** - An open-source server management tool for SSH, VNC, and RDP.
-10. **pingvin-share** - A file-sharing service.
-11. **strling-pdf** - A PDF management and processing service.
-12. **yt-dlp** - A tool for downloading videos from the web.
-13. **jellyfin** - A media server for personal media files.
-14. **kavita** - A self-hosted ebooks management service.
-15. **speedtest-tracker** - A speedtest tracker for monitoring internet speeds.
-16. **syncthing** - A continuous file synchronization service.
+1. **[changedetection](https://github.com/dgtlmoon/changedetection.io)** - A service for monitoring website changes with notification methods and support for various types of changes.
+2. **[coder](https://github.com/coder/coder)** - A cloud IDE for code editing and development with support for collaborative coding and tool integrations.
+3. **[file-browser](https://github.com/filebrowser/filebrowser)** - A web-based file management tool.
+4. **[homarr](https://github.com/ajnart/homarr)** - A customizable dashboard for all your apps and services.
+5. **[homepage](https://github.com/gethomepage/homepage)** - A simple, customizable homepage for managing links and apps.
+6. **[mealie](https://github.com/mealie-recipes/mealie)** - A self-hosted recipe manager and meal planner with grocery list generation and dietary customization.
+7. **[navidrome](https://github.com/navidrome/navidrome)** - A lightweight, self-hosted music server supporting various audio formats and client compatibility.
+8. **[nextcloud](https://github.com/nextcloud/server)** - A self-hosted productivity platform.
+9. **[nexterm](https://github.com/gnmyt/Nexterm)** - An open-source server management tool for SSH, VNC, and RDP with multi-user support and audit logging.
+10. **[pingvin-share](https://github.com/stonith404/pingvin-share)** - A file-sharing service with file size limits, security features, and temporary link support.
+11. **[strling-pdf](https://github.com/Stirling-Tools/Stirling-PDF)** - A PDF management and processing service.
+12. **[yt-dlp](https://github.com/alexta69/metube)** - A tool for downloading videos from the web.
+13. **[jellyfin](https://github.com/jellyfin/jellyfin)** - A media server for personal media files.
+14. **[kavita](https://github.com/Kareadita)** - A self-hosted ebooks management service supporting multiple formats and mobile-friendly interface.
+15. **[speedtest-tracker](https://github.com/alexjustesen/speedtest-tracker)** - A speedtest tracker for monitoring internet speeds.
+16. **[syncthing](https://github.com/syncthing/syncthing)** - A continuous file synchronization service.
 
 ## Repository Structure
 The repository is organized as follows:
