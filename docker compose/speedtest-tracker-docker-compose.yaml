@@ -1,0 +1,18 @@
+services:
+    speedtest-tracker:
+        container_name: speedtest-tracker
+        ports:
+            - 8686:80
+            - 8843:443
+        environment:
+            - PUID={PUID}
+            - PGID={PGID}
+            - APP_KEY=<your_app_key> # Generate app key using https://speedtest-tracker.dev
+            - APP_URL= # your app url
+            - DB_CONNECTION=sqlite
+            - SPEEDTEST_SCHEDULE=1 * * * * # Speed test scheduled for every hour          
+            - TZ=Asia/Kolkata
+        volumes:
+            - ~/speedtest:/config
+        image: lscr.io/linuxserver/speedtest-tracker:latest
+        restart: unless-stopped
