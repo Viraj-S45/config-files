@@ -1,0 +1,212 @@
+# Modifier Key ( Win )
+set $mod Mod4
+#set $floating_modifier Mod1
+floating_minimum_size 75 x 50
+floating_maximum_size -1 x -1
+
+# window border
+default_border pixel
+
+for_window [class="^.*"] border pixel 2
+
+#System Font
+font pango:Meslo LGM Nerd Font 10
+
+# > Startup Items <
+
+# dual screen config script
+exec_always --no-startup-id ~/.screenlayout/dualscreen.sh
+
+
+exec --no-startup-id dex --autostart --environment i3
+
+# authentication agent
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+
+
+# notification daemon
+exec --no-startup-id dunst
+
+# smooth transition daemon
+exec_always --no-startup-id picom
+
+
+
+# walpaper daemon
+exec_always --no-startup-id feh --bg-scale /home/virajs/Nextcloud/Pictures/Wallpapers/archlinux.png
+
+
+# polybar
+# kill any hanging polybar processes
+exec_always --no-startup-id killall polybar
+#exec_always --no-startup-id polybar
+exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
+
+# rofi application menu
+bindsym $mod+space exec rofi -show drun
+
+# nextcloud desktop client
+#exec --no-startup-id nextcloud
+exec_always --no-startup-id ~/Applications/Nextcloud-3.15.3-x86_64_0a44d0ae18d0691e6e7b84a71b23d3ef.AppImage
+
+# bluetooth
+exec_always --no-startup-id blueman-applet
+
+# flameshot screen shot tool
+exec_always --no-startup-id flameshot
+
+# barrier keyboard mouse sharing tool
+#exec_always --no-startup-id killall barrier 
+
+exec_always --no-startup-id barrier
+
+
+
+# ---!---
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Floating Modifier
+floating_modifier $mod
+
+# ---!---
+tiling_drag modifier titlebar
+
+# start a terminal ( alacritty )
+bindsym $mod+Return exec alacritty
+
+# run themeswitcher 
+bindsym $mod+Shift+t exec ~/.config/theme-switcher/scripts/theme-switcher.sh
+# kill focused window
+bindsym $mod+w kill
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# ---!---
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+#bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+#bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+
+bindsym $mod+Shift+c reload
+
+bindsym $mod+Shift+r restart
+
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+mode "resize" {
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+set $base00 #272822
+set $base01 #383830
+set $base02 #49483e
+set $base03 #75715e
+set $base04 #a59f85
+set $base05 #f8f8f2
+set $base06 #f5f4f1
+set $base07 #f9f8f5
+set $base08 #f92672
+set $base09 #fd971f
+set $base0A #f4bf75
+set $base0B #a6e22e
+set $base0C #a1efe4
+set $base0D #66d9ef
+set $base0E #ae81ff
+set $base0F #cc6633
+client.focused          #F0C674 #282A2E #C5C8C6 #F0C674 #F0C674 #373B41
+client.focused_inactive #373B41 #373B41 #C5C8C6 #373B41 #373B41 #373B41
+client.unfocused        #373B41 #282A2E #C5C8C6 #373B41 #373B41 #373B41
+client.urgent           #A54242 #282A2E #C5C8C6 #A54242 #A54242 #373B41
+client.placeholder      #707880 #282A2E #C5C8C6 #707880 #707880 #373B41
+client.background       #282A2E
