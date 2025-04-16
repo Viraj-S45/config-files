@@ -1,0 +1,17 @@
+style=/home/virajs/.config/wofi/style.css
+; xoffset=1000%
+; yoffset=300%
+show=drun
+width=450
+height=350
+always_parse_args=true
+show_all=true
+print_command=true
+layer=overlay
+insensitive=true
+allow_markup=true
+; allow_images=true
+image_size=22
+hide_scroll=true
+show-submenus=false
+no_actions=true

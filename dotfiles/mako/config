@@ -1,0 +1,37 @@
+# Take a look at the mako manpage with the command:
+#   man 5 mako
+# To view all configuration options.
+
+font=Jetbrains Mono 11
+format=<b>%a ⏵</b> %s\n%b
+sort=-time
+output=eDP-1
+layer=overlay
+anchor=top-right
+background-color=#1f262a
+text-color=#d3c6aa
+width=300
+height=110
+margin=5
+padding=0,5,10
+border-size=1
+border-color=#d3c6aa
+default-timeout=6000
+ignore-timeout=1
+#; border-radius=10
+#; icons=1
+#; max-icon-size=64
+#default-timeout=0
+#ignore-timeout=1
+
+[urgency=low]
+border-color=#d3c6aa
+
+[urgency=normal]
+border-color=#d3c6aa
+
+[urgency=high]
+border-color=#e67e80
+default-timeout=0
+
+

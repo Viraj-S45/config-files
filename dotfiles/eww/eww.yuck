@@ -1,0 +1,232 @@
+; # -----------------------------------------------------
+; # Variables
+; # -----------------------------------------------------
+(defvar reveal false)
+(defpoll time_poll :interval "10s" "date +'%I:%M %p' | sed 's/^0//'")
+(defpoll date_poll :interval "10s" "date '+%d %B'")
+(defpoll speaker_poll :interval "999h" "./modules/speaker.sh")
+(defpoll microphone_poll :interval "999h" "./modules/microphone.sh")
+
+
+
+
+; # -----------------------------------------------------
+; # Comment
+; # -----------------------------------------------------
+
+
+; # -----------------------------------------------------
+; # Widgets
+; # -----------------------------------------------------
+
+(defwidget powermenu-toggle []
+  (button
+    :onclick "eww open --toggle bigpowermenu"
+    :tooltip "Power Menu"
+    :class "powermenu-toggle"
+  ""))
+
+
+;;;; Rofi style powermenu
+(defwidget bigpowermenu []
+  (box :orientation "h" :space-evenly false :class "bigpowermenu" :halign "center" :valign "center" :spacing 25
+    (button :style "color: #e67e80;" :class "shutdown" :onrightclick "shutdown now" "")
+    (button :style "color: #7eb88c;" :class "reboot" :onrightclick "reboot" "")
+    (button :style "color: #cb8fad;" :class "lock" :onclick "hyprlock" "")
+    (button :style "color: #e09371;" :class "lock" :onclick "pkill eww && eww open topbar" "")
+  ))
+
+
+
+
+
+
+(defwidget tray []
+  (box :class "tray"
+    (systray)))
+
+; # Hover Module Start
+
+
+(defwidget hovered-sign [var]
+  (box :space-evenly false
+    (revealer :reveal {!var}
+      :duration "100ms"
+      :transition "slideleft"
+      (children :nth 0))
+    (revealer :reveal {var}
+      :duration "100ms"
+      :transition "slideleft"
+      (children :nth 1))))
+
+; Revealer on hover, using children
+(defwidget revealer-on-hover [var varname ?class ?duration ?transition]
+  (box :class "${class} revealer-on-hover"
+    :orientation "h"
+    :space-evenly false
+    (eventbox :class "eventbox"
+      :onhover "eww update ${varname}=true"
+      :onhoverlost "eww update ${varname}=false"
+      (box :space-evenly false
+        (children :nth 0)
+        (revealer :reveal var
+          :transition {transition ?: "slideright"}
+          :duration {duration ?: "500ms"}
+          (children :nth 1))
+        (children :nth 2)))))
+
+
+(defwidget hover-module [?class]
+  (box :space-evenly false
+    :class "hover-module ${class}"
+    (revealer-on-hover :class "hl-on-hover"
+      :var reveal
+      :varname "reveal"
+      :transition "slideleft"
+      
+      (hovered-sign :var reveal
+        ""
+        "  "
+      )
+      ; "You have 1 notification"
+      (tray)" "
+      ; "   "
+    )))
+
+(defwidget test-box [?color]
+  (box :class "${color} test-box"
+    :orientation "h"
+    :halign "start"
+    :hexpand false
+    :space-evenly false
+  :width 50))
+
+; # Hover Module END
+
+(defwidget cpu []
+  (icon-module :class "cpu" :icon ""
+    (label :text "${round(EWW_CPU.avg, 0)}%")))
+
+(defwidget ram []
+  (icon-module :class "ram" :icon "" :visible {EWW_RAM.used_mem_perc != ""}
+    (label :text "${round(EWW_RAM.used_mem_perc, 0)}%")))
+
+(defwidget microphone []
+  (icon-module :class "microphone"
+    :icon {microphone_poll.icon}
+    (eventbox :onscroll `eww update microphone_poll="$(./modules/microphone.sh {})"`
+      (button :onclick `eww update microphone_poll="$(./modules/microphone.sh toogle)"`
+        (label :text {microphone_poll.content})))))
+
+(defwidget speaker []
+  (icon-module :class "speaker"
+    :icon {speaker_poll.icon}
+    (eventbox :onscroll `eww update speaker_poll="$(./modules/speaker.sh {})"`
+      (button :onclick `eww update speaker_poll="$(./modules/speaker.sh toogle)"`
+        (label :text {speaker_poll.content})))))
+
+(defwidget date []
+  (icon-module :class "date" :icon ""
+    (label :text date_poll)))
+
+(defwidget time []
+  (icon-module :class "time" :icon ""
+    
+    (label :text time_poll)))
+
+
+
+(defwidget icon-module [icon ?class ?visible]
+  (box :class "${class} icon-module"
+    :orientation "h"
+    :halign "end"
+    :space-evenly false
+    :visible {visible ?: true} ; because the argument is optional
+    (label :class "icon-module__icon" :text "${icon}")
+    (children)))
+
+
+; # -----------------------------------------------------
+; # Left Mid Right Bars
+; # -----------------------------------------------------
+
+(defwidget leftbar []
+  (box
+    :halign "start"
+    
+  ))
+
+(defwidget midbar []
+  (box
+    :halign "center"
+    (date)
+  ))
+
+(defwidget rightbar []
+  (box
+    :halign "end"
+    :hexpand false
+    :space-evenly false
+    
+    (hover-module)
+    (cpu)
+    (ram)
+    (microphone)
+    (speaker)
+    (time)
+    (powermenu-toggle)
+  ))
+
+
+; # -----------------------------------------------------
+; # Bar Combines : Left Mid Right
+; # -----------------------------------------------------
+
+(defwidget bar []
+  (centerbox :orientation "h"
+    (leftbar)
+    (midbar)
+    (rightbar)
+  ))
+
+
+; # -----------------------------------------------------
+; # Main Topbar
+; # -----------------------------------------------------
+
+(defwindow topbar
+  :monitor 0
+  :geometry (geometry
+    :x "0"
+    :y "0"
+    :width "100%"
+    :height "32px"
+    :anchor "top center"
+  )
+  :exclusive "true"
+  :stacking "fg"
+  ; :focusable "ondemand"
+  :reserve (struts :distance "40px" :side "top")
+  :windowtype "dock"
+  :wm-ignore false
+  (bar)
+)
+
+(defwindow bigpowermenu
+  :wm-ignore true
+  :monitor 0
+  :windowtype "dock"
+  :stacking "fg"
+  ; :focusable "ondemand"
+  :geometry (geometry :x "0px"
+    :y "0px"
+    :width "250px"
+    :height "75px"
+  :anchor "center center")
+  ; :wm-ignore false
+  
+  (box :class "bigpowermenu-wrapper"
+    (bigpowermenu)))
+
+
+

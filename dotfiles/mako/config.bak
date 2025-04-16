@@ -1,0 +1,22 @@
+
+
+
+
+layer=overlay
+background-color=#1f262a
+border-size=1
+border-color=#d3c6aa
+border-radius=0
+default-timeout=5000
+ignore-timeout=1
+font=Jetbrains Mono 14, Noto Color Emoji 10, Sazanami Gothic 10, Hack Nerd Font 10
+text-color=#d3c6aa
+outer-margin=0,5,15,0
+anchor=bottom-right
+
+[urgency=high]
+border-color=#e67e80
+default-timeout=0
+
+[urgency=low]
+border-color=#d3c6aa
